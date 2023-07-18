@@ -6,7 +6,6 @@
 import pandas as pd
 import numpy as np
 import math
-import os
 
 
 # Get the Saccades
@@ -203,33 +202,33 @@ def OutputFeatureFile(_segLength):
     for _pid in range(1, 33):
         _sampleNum = _segLength * 50
         _segNum = int(60/_segLength)
-        df = pd.read_csv("/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/sub_split/%s.csv" % _pid, index_col=False)
+        df = pd.read_csv("sub_split/%s.csv" % _pid, index_col=False)
 
-        m_dataList = [[0 for i in range(21)] for j in range(50 * 60 * 8)]
+        m_dataList = [[0 for i in range(23)] for j in range(50 * 60 * 8)]
 
         m_dataList[0] = df['HM'].tolist()
         m_dataList[1] = df['EM'].tolist()
-        # m_dataList[2] = df['PD_Mean'].tolist()
-        # m_dataList[3] = df['PD_Emotion'].tolist()
-        m_dataList[2] = df['EDA'].tolist()
-        m_dataList[3] = df['BVP'].tolist()
-        m_dataList[4] = df['HR'].tolist()
-        m_dataList[5] = df['SKT'].tolist()
+        m_dataList[2] = df['PD_Mean'].tolist()
+        m_dataList[3] = df['PD_Emotion'].tolist()
+        m_dataList[4] = df['EDA'].tolist()
+        m_dataList[5] = df['BVP'].tolist()
+        m_dataList[6] = df['HR'].tolist()
+        m_dataList[7] = df['SKT'].tolist()
 
-        m_dataList[6] = df['HM_Pitch'].tolist()
-        m_dataList[7] = df['HM_Yaw'].tolist()
-        m_dataList[8] = df['EM_Pitch'].tolist()
-        m_dataList[9] = df['EM_Yaw'].tolist()
+        m_dataList[8] = df['HM_Pitch'].tolist()
+        m_dataList[9] = df['HM_Yaw'].tolist()
+        m_dataList[10] = df['EM_Pitch'].tolist()
+        m_dataList[11] = df['EM_Yaw'].tolist()
 
-        m_dataList[10] = df['Valence'].tolist()
-        m_dataList[11] = df['Arousal'].tolist()
-        m_dataList[12] = df['V_binary'].tolist()
-        m_dataList[13] = df['A_binary'].tolist()
-        m_dataList[14] = df['V_A_5class'].tolist()
-        m_dataList[15] = df['VID'].tolist()
+        m_dataList[12] = df['Valence'].tolist()
+        m_dataList[13] = df['Arousal'].tolist()
+        m_dataList[14] = df['V_binary'].tolist()
+        m_dataList[15] = df['A_binary'].tolist()
+        m_dataList[16] = df['V_A_5class'].tolist()
+        m_dataList[17] = df['VID'].tolist()
 
-        m_dataList[16] = df['SAM_Valence'].tolist()
-        m_dataList[17] = df['SAM_Arousal'].tolist()
+        m_dataList[18] = df['SAM_Valence'].tolist()
+        m_dataList[19] = df['SAM_Arousal'].tolist()
 
         m_featureList = [[0 for i in range(_segNum * 8)] for j in range(63)]
 
@@ -240,24 +239,23 @@ def OutputFeatureFile(_segLength):
                 m_featureList[i * 3 + 2][_seg] = np.median(m_dataList[i][_seg * _sampleNum:(_seg + 1) * _sampleNum])
 
         for _seg in range(_segNum * 8):
-            m_featureList[36][_seg] = np.mean(m_dataList[10][_seg * _sampleNum:(_seg + 1) * _sampleNum])
-            m_featureList[37][_seg] = np.median(m_dataList[10][_seg * _sampleNum:(_seg + 1) * _sampleNum])
-            m_featureList[38][_seg] = np.mean(m_dataList[11][_seg * _sampleNum:(_seg + 1) * _sampleNum])
-            m_featureList[39][_seg] = np.median(m_dataList[11][_seg * _sampleNum:(_seg + 1) * _sampleNum])
-            m_featureList[40][_seg] = np.mean(m_dataList[16][_seg * _sampleNum:(_seg + 1) * _sampleNum])
-            m_featureList[41][_seg] = np.median(m_dataList[17][_seg * _sampleNum:(_seg + 1) * _sampleNum])
-            m_featureList[49][_seg] = np.mean(m_dataList[15][_seg * _sampleNum:(_seg + 1) * _sampleNum])
+            m_featureList[36][_seg] = np.mean(m_dataList[12][_seg * _sampleNum:(_seg + 1) * _sampleNum])
+            m_featureList[37][_seg] = np.median(m_dataList[12][_seg * _sampleNum:(_seg + 1) * _sampleNum])
+            m_featureList[38][_seg] = np.mean(m_dataList[13][_seg * _sampleNum:(_seg + 1) * _sampleNum])
+            m_featureList[39][_seg] = np.median(m_dataList[13][_seg * _sampleNum:(_seg + 1) * _sampleNum])
+            m_featureList[40][_seg] = np.mean(m_dataList[18][_seg * _sampleNum:(_seg + 1) * _sampleNum])
+            m_featureList[41][_seg] = np.median(m_dataList[19][_seg * _sampleNum:(_seg + 1) * _sampleNum])
 
         m_featureList[42], m_featureList[43] = CalculateVA_SAM(m_featureList[40], m_featureList[41])
         m_featureList[44], m_featureList[45], m_featureList[46], m_featureList[47], m_featureList[48] = CalculateVA(
             m_featureList[36], m_featureList[38])
 
         for _seg in range(_segNum * 8):
-            m_fixationDurList = Get_FixationData(m_dataList[8][_seg * _sampleNum:(_seg + 1) * _sampleNum],
-                                                 m_dataList[9][_seg * _sampleNum:(_seg + 1) * _sampleNum])
+            m_fixationDurList = Get_FixationData(m_dataList[10][_seg * _sampleNum:(_seg + 1) * _sampleNum],
+                                                 m_dataList[11][_seg * _sampleNum:(_seg + 1) * _sampleNum])
             m_saccadeDurList, m_saccadeAmpList = Get_SaccadeData(
-                m_dataList[8][_seg * _sampleNum:(_seg + 1) * _sampleNum],
-                m_dataList[9][_seg * _sampleNum:(_seg + 1) * _sampleNum])
+                m_dataList[10][_seg * _sampleNum:(_seg + 1) * _sampleNum],
+                m_dataList[11][_seg * _sampleNum:(_seg + 1) * _sampleNum])
 
             m_featureList[50][_seg] = len(m_fixationDurList)
 
@@ -360,11 +358,9 @@ def OutputFeatureFile(_segLength):
             "VID": m_featureList[49],
         }
         df = pd.DataFrame(m_dataList)
-        filename = "sub_split_feature_" + str(_segLength)
-        # if not os.path.exists('/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/Features/{_fileName}' + "/%s.csv" % _pid):
-        #     os.makedirs('/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/Features/{_fileName}' + "/%s.csv" % _pid)  
-        df.to_csv("/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/Features/%s.csv" % _pid, index=False)
-        # df.to_csv(f'/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/Features/{_fileName}' + "/%s.csv" % _pid, index=False)
+        _fileName = "sub_split_feature_" + str(_segLength)
+        df.to_csv(_fileName + "/%s.csv" % _pid, index=False)
+
 
 for i in range(len(m_segLength)):
     OutputFeatureFile(m_segLength[i])

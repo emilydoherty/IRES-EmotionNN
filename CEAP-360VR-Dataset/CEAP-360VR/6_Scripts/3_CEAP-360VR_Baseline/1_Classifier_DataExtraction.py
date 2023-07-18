@@ -22,7 +22,7 @@ m_video_v = [1, 1, 0, 0, 1, 1, 0, 0]
 m_video_a = [1, 0, 1, 0, 1, 0, 1, 0]
 # Get video fps
 m_videoFpsList = []
-with open('/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/1_Stimuli/VideoInfo.json', mode='r') as _videoInfoFile:
+with open('../CEAP-360VR/1_Stimuli/VideoInfo.json', mode='r') as _videoInfoFile:
     _videoInfoData = json.load(_videoInfoFile)
 
     for i in range(1, len(_videoInfoData["VideoInfo"])):
@@ -58,8 +58,8 @@ for _pid in range(1, 33):
     m_val3classList = []
     m_aro3classList = []
     m_vaClassList = []
-    # m_lpdNewList = []
-    # m_rpdNewList = []
+    m_lpdNewList = []
+    m_rpdNewList = []
 
     m_edaNewList = []
     m_bvpNewList = []
@@ -78,15 +78,15 @@ for _pid in range(1, 33):
         for i in range(60 * 50):
             m_samV_label.append(m_video_v[_vid])
             m_samA_Label.append(m_video_a[_vid])
-#need to run processed PD data file first?
-        # with open('Processed_PD_Data/P%s_PD_ProcessedData.json' % str(_pid),
-        #           mode='r') as _behaviorDataFile:
-        #     m_behaviorRawData = json.load(_behaviorDataFile)
 
-        # _pdEmotion = m_behaviorRawData['Video_PD_Data'][_vid]['PD_emotion']
-        # _pd = m_behaviorRawData['Video_PD_Data'][_vid]['PD_Mean']
+        with open('Processed_PD_Data/P%s_PD_ProcessedData.json' % str(_pid),
+                  mode='r') as _behaviorDataFile:
+            m_behaviorRawData = json.load(_behaviorDataFile)
 
-        with open('/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/2_QuestionnaireData/P%s_Questionnaire_Data.json' % str(_pid),
+        _pdEmotion = m_behaviorRawData['Video_PD_Data'][_vid]['PD_emotion']
+        _pd = m_behaviorRawData['Video_PD_Data'][_vid]['PD_Mean']
+
+        with open('../CEAP-360VR/2_QuestionnaireData/P%s_Questionnaire_Data.json' % str(_pid),
                   mode='r') as _participantDataFile:
             m_participantData = json.load(_participantDataFile)
         _SAMv = m_participantData['QuestionnaireData'][0]['Video_SAMRating_VideoTime_Data'][_vid]['ValenceValue']
@@ -97,13 +97,13 @@ for _pid in range(1, 33):
             m_samValenceList.append(_SAMv)
             m_samArousalList.append(_SAMa)
 
-        with open('/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/3_AnnotationData/Frame/P%s_Annotation_FrameData.json' % str(_pid),
+        with open('../CEAP-360VR/3_AnnotationData/Frame/P%s_Annotation_FrameData.json' % str(_pid),
                   mode='r') as _participantDataFile:
             m_participantData = json.load(_participantDataFile)
         _dataVA = m_participantData['ContinuousAnnotation_FrameData'][0]['Video_Annotation_FrameData'][_vid][
             'TimeStamp_Valence_Arousal']
 
-        with open('/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/5_PhysioData/Frame/P%s_Physio_FrameData.json' % str(_pid),
+        with open('../CEAP-360VR/5_PhysioData/Frame/P%s_Physio_FrameData.json' % str(_pid),
                   mode='r') as _participantDataFile:
             m_participantData = json.load(_participantDataFile)
         _dataEDA = m_participantData['Physio_FrameData'][0]['Video_Physio_FrameData'][_vid]['EDA_FrameData']
@@ -111,20 +111,22 @@ for _pid in range(1, 33):
         _dataSKT = m_participantData['Physio_FrameData'][0]['Video_Physio_FrameData'][_vid]['SKT_FrameData']
         _dataHR = m_participantData['Physio_FrameData'][0]['Video_Physio_FrameData'][_vid]['HR_FrameData']
 
-        with open('/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/4_BehaviorData/Frame/P%s_Behavior_FrameData.json' % str(_pid),
+        with open('../CEAP-360VR/4_BehaviorData/Frame/P%s_Behavior_FrameData.json' % str(_pid),
                   mode='r') as _participantDataFile:
             m_participantData = json.load(_participantDataFile)
         _dataHM = m_participantData['Behavior_FrameData'][0]['Video_Behavior_FrameData'][_vid]['HM']
         _dataEM = m_participantData['Behavior_FrameData'][0]['Video_Behavior_FrameData'][_vid]['EM']
- 
+        _dataLPD = m_participantData['Behavior_FrameData'][0]['Video_Behavior_FrameData'][_vid]['LPD']
+        _dataRPD = m_participantData['Behavior_FrameData'][0]['Video_Behavior_FrameData'][_vid]['RPD']
+
         _hmRXList = []
         _hmRYList = []
         _hmRZList = []
         _emRXList = []
         _emRYList = []
         _emRZList = []
-        # _pdList = []
-        # _pdEmotionList = []
+        _pdList = []
+        _pdEmotionList = []
 
         _hmPitchList = []
         _hmYawList = []
@@ -170,8 +172,8 @@ for _pid in range(1, 33):
             _emYawList.append(_dataEM[_sample]['Yaw'])
 
 
-        # _pdList = _pd
-        # _pdEmotionList = _pdEmotion
+        _pdList = _pd
+        _pdEmotionList = _pdEmotion
         _hmRList = list(zip(_hmRXList, _hmRYList, _hmRZList))
         pca = PCA(1)
         pca.fit(_hmRList)
@@ -214,10 +216,10 @@ for _pid in range(1, 33):
         m_valNewList.extend(_valNewList)
         m_aroNewList.extend(_aroNewList)
 
-        # _lpdNewList = np.interp(_newSecList, _oldSecList, _pdList)
-        # _rpdNewList = np.interp(_newSecList, _oldSecList, _pdEmotionList)
-        # m_lpdNewList.extend(Normalization(_lpdNewList))
-        # m_rpdNewList.extend(Normalization(_rpdNewList))
+        _lpdNewList = np.interp(_newSecList, _oldSecList, _pdList)
+        _rpdNewList = np.interp(_newSecList, _oldSecList, _pdEmotionList)
+        m_lpdNewList.extend(Normalization(_lpdNewList))
+        m_rpdNewList.extend(Normalization(_rpdNewList))
 
         _edaNewList = np.interp(_newSecList, _oldSecList, _edaList)
         _bvpNewList = np.interp(_newSecList, _oldSecList, _bvpList)
@@ -269,8 +271,8 @@ for _pid in range(1, 33):
         "HM_Yaw_N": m_hmYaw_n_List,
         "EM_Pitch_N": m_emPitch_n_List,
         "EM_Yaw_N": m_emYaw_n_List,
-        # "PD_Mean": m_lpdNewList,
-        # "PD_Emotion": m_rpdNewList,
+        "PD_Mean": m_lpdNewList,
+        "PD_Emotion": m_rpdNewList,
         "EDA": m_edaNewList,
         "BVP": m_bvpNewList,
         "HR": m_hrNewList,
@@ -293,7 +295,7 @@ for _pid in range(1, 33):
         "VID": m_vidList,
     }
     df = pd.DataFrame(m_dataList)
-    df.to_csv("/Users/emilydoherty/Desktop/IRES/Emotion_Datasets/CEAP-360VR-Dataset-master/CEAP-360VR/sub_split/%s.csv" % _pid, index=False)
+    df.to_csv("sub_split/%s.csv" % _pid, index=False)
 
 #     m_valList.extend(m_valNewList)
 #     m_aroList.extend(m_aroNewList)
