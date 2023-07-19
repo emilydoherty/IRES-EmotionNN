@@ -13,7 +13,7 @@ T. Xue, A. El Ali, T. Zhang, G. Ding, and P. Cesar, "CEAP-360VR: A Continuous Ph
 
 VRFS 
 https://github.com/vremotions/vrfs
-Vatsal, Ritik, et al. "An Analysis of Physiological and Psychological Responses in Virtual Reality and Flat Screen Gaming." arXiv preprint arXiv:2306.09690 (2023).![image](https://github.com/emilydoherty/IRES-EmotionNN/assets/88332460/0f811767-e5aa-4816-b8b3-1485f7c93059)
+Vatsal, Ritik, et al. "An Analysis of Physiological and Psychological Responses in Virtual Reality and Flat Screen Gaming." arXiv preprint arXiv:2306.09690 (2023).
 
 AVR 
 https://data.mendeley.com/datasets/y76vbw92y9/3
