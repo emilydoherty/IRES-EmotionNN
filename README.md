@@ -7,7 +7,6 @@ VREED
 https://www.kaggle.com/datasets/lumaatabbaa/vr-eyes-emotions-dataset-vreed
 Tabbaa, L., Searle, R., Ang, C.S., Bafti, S.B., Hossain, M., Intarasirisawat, J., and Glancy, M. 2021. VREED: Virtual Reality Emotion Recognition Dataset using EyeTracking Physiological Measures. Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies.![image](https://github.com/emilydoherty/IRES-EmotionNN/assets/88332460/3b74bff1-64fe-4423-846d-ee95f495af01)
 
-
 CEAP-360VR
 https://github.com/cwi-dis/CEAP-360VR-Dataset
 T. Xue, A. El Ali, T. Zhang, G. Ding, and P. Cesar, "CEAP-360VR: A Continuous Physiological and Behavioral Emotion Annotation Dataset for 360° Videos," in IEEE Transactions on Multimedia, doi: 10.1109/TMM.2021.3124080.
